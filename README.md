@@ -33,6 +33,7 @@ The following products / tools are needed to contribute / fork.
 * Michael Schnyder
 * Martin Kropp
 * Samuel Merki
+* Silvan Laube
 
 ## License
 Licensed under the MIT License
