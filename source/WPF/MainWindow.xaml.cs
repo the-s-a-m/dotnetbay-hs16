@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF.dialogs;
 
 namespace WPF
 {
@@ -38,5 +39,16 @@ namespace WPF
 
         }
 
+        private void SellButtonClick(object sender, RoutedEventArgs e)
+        {
+            var sellView = new SellView();
+            sellView.ShowDialog(); // Blocking 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var bidView = new BidView();
+            bidView.ShowDialog();
+        }
     }
 }

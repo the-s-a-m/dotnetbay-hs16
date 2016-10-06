@@ -11,6 +11,8 @@ using DotNetBay.Core.Execution;
 using DotNetBay.Data.Entity;
 using DotNetBay.Data.Provider.FileStorage;
 using DotNetBay.Interfaces;
+using System.Threading;
+using System.Globalization;
 
 namespace WPF
 {
@@ -26,6 +28,7 @@ namespace WPF
 
         public App()
         {
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             this.AuctionRunner = new AuctionRunner(this.MainRepository);
             this.AuctionRunner.Start();
 
