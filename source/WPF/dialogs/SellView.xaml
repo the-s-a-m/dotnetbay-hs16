@@ -18,7 +18,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="25" />
-            <RowDefinition Height="*" />
+            <RowDefinition MinHeight="25" />
             <RowDefinition Height="25" />
             <RowDefinition Height="25" />
             <RowDefinition Height="25" />
@@ -41,7 +41,7 @@
         <DatePicker Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3"></DatePicker>
         <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2">Image</Label>
         <TextBox Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2"></TextBox>
-        <Button Grid.Row="6" Grid.Column="4" Width="35">...</Button>
+        <Button Grid.Row="6" Grid.Column="4" Width="35" Click="Button_Click">...</Button>
 
         <Button Grid.Row="8" Grid.Column="3">Add Auction</Button>
         <Button Grid.Row="8" Grid.Column="4">Cancel</Button>
