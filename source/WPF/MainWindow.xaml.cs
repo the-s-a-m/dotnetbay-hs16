@@ -31,8 +31,7 @@ namespace WPF
         {
             InitializeComponent();
             DataContext = this;
-            var app = (App)Application.Current;
-
+            var app = Application.Current as App;
             AuctionService = new AuctionService(app.MainRepository, new SimpleMemberService(app.MainRepository));
 
             Auctions = new ObservableCollection<Auction>(AuctionService.GetAll());
@@ -43,12 +42,18 @@ namespace WPF
         {
             var sellView = new SellView();
             sellView.ShowDialog(); // Blocking 
+            Auctions = new ObservableCollection<Auction>(AuctionService.GetAll());
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Place_Bid_Click(object sender, RoutedEventArgs e)
         {
-            var bidView = new BidView();
+            var auctionId = ((Button)sender).Tag;
+            Console.WriteLine(auctionId);
+            var auction = AuctionService.GetById(Convert.ToInt64(auctionId));
+            Console.WriteLine(auction);
+            var bidView = new BidView(AuctionService, auction);
             bidView.ShowDialog();
+            Auctions = new ObservableCollection<Auction>(AuctionService.GetAll());
         }
     }
 }

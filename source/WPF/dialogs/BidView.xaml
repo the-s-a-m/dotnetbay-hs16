@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.dialogs"
         mc:Ignorable="d"
-        Title="SellView" Height="350" Width="300">
+        d:DataContext="{d:DesignInstance Type=local:BidView}"
+        Title="BidView" Height="350" Width="300">
     <Grid Margin="10,0,10,10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -31,19 +32,19 @@
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" FontSize="20" FontWeight="Bold">Place Bid for Auction</Label>
 
         <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">Title</Label>
-        <Label Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3"></Label>
-        <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">Image</Label>
+        <Label Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Content="{Binding Auction.Title}" ></Label>
+        <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" >Image</Label>
         <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">Description</Label>
-        <TextBox Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3"></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3" IsReadOnly="True" Text="{Binding Auction.Description}"></TextBox>
         <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">Start Price</Label>
-        <Label Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3"></Label>
+        <Label Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Content="{Binding Auction.StartPrice}"></Label>
         <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">Current Price</Label>
-
+        <Label Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3" Content="{Binding Auction.CurrentPrice}"></Label>
         <Label Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2">Your Bid</Label>
-        <TextBox Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="3"></TextBox>
+        <TextBox Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="3" Text="{Binding Amount}"></TextBox>
 
 
-        <Button Grid.Row="9" Grid.Column="3">Place Bid</Button>
-        <Button Grid.Row="9" Grid.Column="4">Cancel</Button>
+        <Button Grid.Row="9" Grid.Column="3" Click="Bid_Button_Click">Place Bid</Button>
+        <Button Grid.Row="9" Grid.Column="4" Click="Cancel_Button_Click">Cancel</Button>
     </Grid>
 </Window>
