@@ -1,16 +1,21 @@
-﻿<Window x:Class="WPF.MainWindow"
+﻿<Window x:Class="WPF.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPF"
+        xmlns:converter="clr-namespace:WPF.Converter"
+        xmlns:viewModel="clr-namespace:WPF.ViewModel"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=local:MainWindow}"
         SizeToContent="Width"
         MinHeight="300"
         Title="MainWindow" Height="400">
+
+    <Window.DataContext>
+        <!-- Declaratively create an instance of our SongViewModel -->
+        <viewModel:MainViewModel />
+    </Window.DataContext>
     <Window.Resources>
-        <local:BooleanToStatusTextConverter x:Key="BooleanToStatusTextConverter" />
+        <converter:BooleanToStatusTextConverter x:Key="BooleanToStatusTextConverter" />
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Window.Resources>
     
@@ -35,29 +40,30 @@
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
 
-        <Button Grid.Column="0" Grid.Row="0" Margin="0,10,0,10" Click="SellButtonClick">New Auction</Button>
+        <Button Grid.Column="0" Grid.Row="0" Margin="0,10,0,10" Command="{Binding SellCommand}">New Auction</Button>
 
         <DataGrid Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="1" Grid.RowSpan="5"
                   ItemsSource="{Binding Auctions}" AutoGenerateColumns="False" IsReadOnly="True">
+
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Auction">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock Text="{Binding Title}" FontWeight="Bold" ></TextBlock>
-                                <Image Source="{Binding Image}" MaxHeight="100" MaxWidth="120"></Image>
+                                <TextBlock Text="{Binding Auction.Title}" FontWeight="Bold" ></TextBlock>
+                                <Image Source="{Binding Auction.Image}" MaxHeight="100" MaxWidth="120"></Image>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Status" Binding="{Binding IsRunning,
+                <DataGridTextColumn Header="Status" Binding="{Binding Auction.IsRunning,
                                           Converter={StaticResource BooleanToStatusTextConverter}}" />
-                <DataGridTextColumn Header="Start Price" Binding="{Binding Path=StartPrice}"/>
-                <DataGridTextColumn Header="Current Price" Binding="{Binding Path=CurrentPrice}" />
-                <DataGridTextColumn Header="Bids" Binding="{Binding Path=Bids.Count}" />
-                <DataGridTextColumn Header="Starts" Binding="{Binding Path=StartDateTimeUtc}"/>
-                <DataGridTextColumn Header="Ends" Binding="{Binding Path=EndDateTimeUtc}" />
-                <DataGridTextColumn Header="Seller" Binding="{Binding Path=Seller.DisplayName}" />
+                <DataGridTextColumn Header="Start Price" Binding="{Binding Auction.StartPrice}"/>
+                <DataGridTextColumn Header="Current Price" Binding="{Binding Auction.CurrentPrice}" />
+                <DataGridTextColumn Header="Bids" Binding="{Binding Auction.Bids.Count}" />
+                <DataGridTextColumn Header="Starts" Binding="{Binding Auction.StartDateTimeUtc}"/>
+                <DataGridTextColumn Header="Ends" Binding="{Binding Auction.EndDateTimeUtc}" />
+                <DataGridTextColumn Header="Seller" Binding="{Binding Auction.Seller.DisplayName}" />
                 <DataGridTemplateColumn Header="Closed" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -65,8 +71,8 @@
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Path=IsClosed}" Value="True">
-                                                <Setter Property="Text" Value="{Binding Path=CloseDateTimeUtc}"/>
+                                            <DataTrigger Binding="{Binding Auction.IsClosed}" Value="True">
+                                                <Setter Property="Text" Value="{Binding Auction.CloseDateTimeUtc}"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -75,12 +81,12 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Winner" Binding="{Binding Path=Winner.DisplayName}" />
+                <DataGridTextColumn Header="Winner" Binding="{Binding Auction.Winner.DisplayName}" />
 
                 <DataGridTemplateColumn Header="Place Bid" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Background="Green" Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityConverter}}" Click="Place_Bid_Click" Tag="{Binding Id}">Place</Button>
+                            <Button Background="Green" Visibility="{Binding Auction.IsRunning, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding BidCommand}">Place</Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

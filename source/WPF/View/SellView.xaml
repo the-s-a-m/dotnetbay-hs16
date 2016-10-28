@@ -1,13 +1,15 @@
-﻿<Window x:Class="WPF.dialogs.SellView"
+﻿<Window x:Class="WPF.View.SellView"
+        x:Name="WPFSellView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPF.dialogs"
         xmlns:System="clr-namespace:System;assembly=mscorlib"
+        xmlns:viewModel="clr-namespace:WPF.ViewModel"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=local:SellView}"
+        d:DataContext="{d:DesignInstance Type=viewModel:SellViewModel}"
         Title="SellView" Height="300" Width="300">
+
     <Grid Margin="10,0,10,10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -39,15 +41,17 @@
         <TextBox Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3" Text="{Binding Auction.StartPrice}"></TextBox>
         <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">Start</Label>
         <DatePicker Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" 
-                    SelectedDate="{Binding Auction.StartDateTimeUtc, Mode=TwoWay, TargetNullValue={x:Static System:DateTime.Now}}"></DatePicker>
+                    SelectedDate="{Binding Auction.StartDateTimeUtc, Mode=TwoWay, TargetNullValue={x:Static System:DateTime.Now}}">
+        </DatePicker>
         <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">End</Label>
         <DatePicker Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3"
-                     SelectedDate="{Binding Auction.EndDateTimeUtc, Mode=TwoWay, TargetNullValue={x:Static System:DateTime.Now}}"></DatePicker>
+                     SelectedDate="{Binding Auction.EndDateTimeUtc, Mode=TwoWay, TargetNullValue={x:Static System:DateTime.Now}}">
+        </DatePicker>
         <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2">Image</Label>
         <TextBox Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding ImagePath}"></TextBox>
-        <Button Grid.Row="6" Grid.Column="4" Width="35" Click="Add_Image_Click">...</Button>
+        <Button Grid.Row="6" Grid.Column="4" Width="35" Command="{Binding AddImageCommand}">...</Button>
 
-        <Button Grid.Row="8" Grid.Column="3" Click="Save_Action_Click">Add Auction</Button>
-        <Button Grid.Row="8" Grid.Column="4" Click="Cancel_Click">Cancel</Button>
+        <Button Grid.Row="8" Grid.Column="3" Command="{Binding SaveCommand}">Add Auction</Button>
+        <Button Grid.Row="8" Grid.Column="4" Command="{Binding CloseWindowCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=WPFSellView}">Cancel</Button>
     </Grid>
 </Window>
